@@ -5,14 +5,14 @@ val USAGE = "usage: jwc [-clw] [file ...]"
 @main def main(args: String*): Unit =
   if args.size < 1 then
     Console.err.println(USAGE)
-    sys.exit(2)
+    sys.exit(64)
 
   val countOptions = parseCountOptions(args(0))
 
   val filePaths = parseFilePaths(args.toSeq)
   if filePaths.isEmpty then
     Console.err.println(USAGE)
-    sys.exit(2)
+    sys.exit(64)
 
   val counts = filePaths.flatMap(p => countFile(p, countOptions))
 
