@@ -1,17 +1,15 @@
 package com.jwc
 
-val USAGE = "usage: jwc [-clw] [file ...]"
-
 @main def main(args: String*): Unit =
   if args.size < 1 then
-    Console.err.println(USAGE)
+    writeUsage()
     sys.exit(64)
 
   val countOptions = parseCountOptions(args(0))
 
   val filePaths = parseFilePaths(args.toSeq)
   if filePaths.isEmpty then
-    Console.err.println(USAGE)
+    writeUsage()
     sys.exit(64)
 
   val counts = filePaths.flatMap(p => countFile(p, countOptions))
@@ -20,6 +18,9 @@ val USAGE = "usage: jwc [-clw] [file ...]"
   println(counts)
 
   sys.exit(0)
+
+def writeUsage(): Unit =
+  Console.err.println("usage: jwc [-clw] [file ...]")
 
 def parseCountOptions(arg: String): Set[CountOption] =
   // TODO: validate options
