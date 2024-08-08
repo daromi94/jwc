@@ -1,4 +1,6 @@
-package com.jwc
+package com.jwc.cli
+
+import com.jwc.{Count, CountOption, FilePath, count, readBytesAndApply}
 
 @main def main(args: String*): Unit =
   if args.size < 1 then
