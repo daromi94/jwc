@@ -1,4 +1,4 @@
-package com.jwc
+package com.daromi.jwc
 
 import java.nio.file.{Files, Path}
 
