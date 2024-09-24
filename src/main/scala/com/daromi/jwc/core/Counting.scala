@@ -22,21 +22,18 @@ def count(
     (option, value)
 
   options
-    .map(option => internal(option, bytes))
-    .map((option, value) => option -> value)
+    .map(internal(_, bytes))
     .toMap
 
 private def countBytes(bytes: Array[Byte]): CountValue =
   bytes.length
 
 private def countLines(bytes: Array[Byte]): CountValue =
-  bytes.count(byte => byte == 0x0a)
+  bytes.count(_ == 0x0a)
 
 private def countWords(bytes: Array[Byte]): CountValue =
-  def isWhitespace(byte: Byte): Boolean =
-    val whitespaces = Set(0x09, 0x0a, 0x0d, 0x20)
-
-    whitespaces.contains(byte)
+  val whitespaces = Set(0x09, 0x0a, 0x0d, 0x20)
+  val isWhitespace = (byte: Byte) => whitespaces.contains(byte)
 
   var count = 0L
   var inside = false
