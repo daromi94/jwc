@@ -1,7 +1,18 @@
-package com.daromi.jwc.core
+package com.daromi.jwc
 
-enum CountOption:
-  case Bytes, Lines, Words
+enum CountOption(val value: Char):
+  case Bytes extends CountOption('c')
+  case Lines extends CountOption('l')
+  case Words extends CountOption('w')
+
+object CountOption:
+  val DEFAULTS: Set[CountOption] = Set(Bytes, Lines, Words)
+
+  def from(value: Char): Option[CountOption] =
+    values.find(_.value == value)
+
+  def exists(value: Char): Boolean =
+    values.exists(_.value == value)
 
 type CountValue = Long
 type CountByOption = Map[CountOption, CountValue]
@@ -27,8 +38,8 @@ private def countLines(bytes: Array[Byte]): CountValue =
   bytes.count(_ == 0x0a)
 
 private def countWords(bytes: Array[Byte]): CountValue =
-  val whitespaces = Set(0x09, 0x0a, 0x0d, 0x20)
-  val isWhitespace = whitespaces.contains _
+  val whitespaces = Set[Byte](0x09, 0x0a, 0x0d, 0x20)
+  val isWhitespace = whitespaces.contains
 
   var count = 0L
   var inside = false
