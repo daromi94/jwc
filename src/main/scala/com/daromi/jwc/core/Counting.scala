@@ -6,10 +6,7 @@ enum CountOption:
 type CountValue = Long
 type CountByOption = Map[CountOption, CountValue]
 
-def count(
-    bytes: Array[Byte],
-    options: Set[CountOption]
-): CountByOption =
+def count(bytes: Array[Byte], options: Set[CountOption]): CountByOption =
   def internal(
       option: CountOption,
       bytes: Array[Byte]
@@ -21,9 +18,7 @@ def count(
 
     (option, value)
 
-  options
-    .map(internal(_, bytes))
-    .toMap
+  options.map(internal(_, bytes)).toMap
 
 private def countBytes(bytes: Array[Byte]): CountValue =
   bytes.length
@@ -33,7 +28,7 @@ private def countLines(bytes: Array[Byte]): CountValue =
 
 private def countWords(bytes: Array[Byte]): CountValue =
   val whitespaces = Set(0x09, 0x0a, 0x0d, 0x20)
-  val isWhitespace = (byte: Byte) => whitespaces.contains(byte)
+  val isWhitespace = whitespaces.contains _
 
   var count = 0L
   var inside = false
