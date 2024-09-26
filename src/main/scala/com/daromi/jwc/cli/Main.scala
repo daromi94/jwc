@@ -1,23 +1,27 @@
-package com.daromi.jwc
+package com.daromi.jwc.cli
+
+import com.daromi.jwc.core.CountOption
 
 @main def main(args: String*): Unit =
-  if args.isEmpty && !stdinHasInput then writeUsage()
+  if args.isEmpty && !stdinHasInput then
+    writeUsage()
 
   val options = parseOptions(args)
   println(options)
 
   sys.exit(0)
 
-def stdinHasInput: Boolean = System.in.available > 0
-
 def writeUsage(): Nothing =
   System.err.println("usage: jwc [-clw] [file ...]")
   sys.exit(64)
 
+def stdinHasInput: Boolean = System.in.available > 0
+
 def parseOptions(args: Seq[String]): Set[CountOption] =
   val groups = args.takeWhile(arg => arg.length > 1 && arg.startsWith("-"))
 
-  if groups.isEmpty then CountOption.DEFAULTS
+  if groups.isEmpty then
+    CountOption.DEFAULTS
   else
     val raw = groups.map(_.substring(1)).flatMap(_.toCharArray)
 
@@ -26,4 +30,5 @@ def parseOptions(args: Seq[String]): Set[CountOption] =
     if invalid.nonEmpty then
       System.err.println(s"jwc: illegal option -- ${invalid.head}")
       writeUsage()
-    else valid.flatMap(CountOption.from).toSet
+    else
+      valid.flatMap(CountOption.from).toSet

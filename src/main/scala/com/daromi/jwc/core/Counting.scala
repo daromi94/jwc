@@ -1,4 +1,4 @@
-package com.daromi.jwc
+package com.daromi.jwc.core
 
 enum CountOption(val value: Char):
   case Bytes extends CountOption('c')
@@ -8,11 +8,9 @@ enum CountOption(val value: Char):
 object CountOption:
   val DEFAULTS: Set[CountOption] = Set(Bytes, Lines, Words)
 
-  def from(value: Char): Option[CountOption] =
-    values.find(_.value == value)
+  def from(value: Char): Option[CountOption] = values.find(_.value == value)
 
-  def exists(value: Char): Boolean =
-    values.exists(_.value == value)
+  def exists(value: Char): Boolean = values.exists(_.value == value)
 
 type CountValue = Long
 type CountByOption = Map[CountOption, CountValue]
@@ -31,11 +29,9 @@ def count(bytes: Array[Byte], options: Set[CountOption]): CountByOption =
 
   options.map(internal(_, bytes)).toMap
 
-private def countBytes(bytes: Array[Byte]): CountValue =
-  bytes.length
+private def countBytes(bytes: Array[Byte]): CountValue = bytes.length
 
-private def countLines(bytes: Array[Byte]): CountValue =
-  bytes.count(_ == 0x0a)
+private def countLines(bytes: Array[Byte]): CountValue = bytes.count(_ == 0x0a)
 
 private def countWords(bytes: Array[Byte]): CountValue =
   val whitespaces = Set[Byte](0x09, 0x0a, 0x0d, 0x20)
@@ -49,6 +45,7 @@ private def countWords(bytes: Array[Byte]): CountValue =
     if !inside && !isWhitespace(byte) then
       inside = true
       count = count + 1
-    else if inside && isWhitespace(byte) then inside = false
+    else if inside && isWhitespace(byte) then
+      inside = false
 
   count
