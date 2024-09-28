@@ -6,7 +6,7 @@ enum CountOption(val value: Char):
   case Words extends CountOption('w')
 
 object CountOption:
-  val DEFAULTS: Set[CountOption] = Set(Bytes, Lines, Words)
+  val Defaults: Set[CountOption] = Set(Bytes, Lines, Words)
 
   def from(value: Char): Option[CountOption] = values.find(_.value == value)
 
