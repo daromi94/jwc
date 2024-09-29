@@ -12,13 +12,13 @@ val Program: String = "jwc"
 
   sys.exit(0)
 
-def writeUsage(): Nothing =
+private def writeUsage(): Nothing =
   System.err.println(s"usage: $Program [-clw] [file ...]")
   sys.exit(64)
 
-def stdinHasInput: Boolean = System.in.available > 0
+private def stdinHasInput: Boolean = System.in.available > 0
 
-def parseOptions(args: Seq[String]): Set[CountOption] =
+private def parseOptions(args: Seq[String]): Set[CountOption] =
   val groups = args.takeWhile(arg => arg.length > 1 && arg.startsWith("-"))
 
   if groups.isEmpty then CountOption.Defaults
