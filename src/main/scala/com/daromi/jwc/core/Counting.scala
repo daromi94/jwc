@@ -15,7 +15,10 @@ object CountOption:
 type CountValue = Long
 type CountByOption = Map[CountOption, CountValue]
 
-def count(bytes: Array[Byte], options: Set[CountOption]): CountByOption =
+def count(
+    bytes: Array[Byte],
+    options: Set[CountOption]
+): CountByOption =
   def internal(
       option: CountOption,
       bytes: Array[Byte]
@@ -45,7 +48,6 @@ private def countWords(bytes: Array[Byte]): CountValue =
     if !inside && !isWhitespace(byte) then
       inside = true
       count = count + 1
-    else if inside && isWhitespace(byte) then
-      inside = false
+    else if inside && isWhitespace(byte) then inside = false
 
   count
